@@ -1,0 +1,113 @@
+.notInStock {
+	margin-top: 4rem;
+	font-size: 4rem;
+}
+
+.productList {
+	display: grid;
+	grid-template-columns: 100%;
+	grid-column-gap: 0;
+	grid-row-gap: 20px;
+	width: 80%;
+	margin-top: 2rem;
+}
+
+.productBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: grey;
+	border-radius: 2%;
+	margin: 1.5rem;
+	padding: 0.2rem;
+	line-height: 1.4rem;
+	width: 14rem;
+	height: 29rem;
+	overflow: hidden;
+}
+
+@media only screen and (min-width: 1750px) {
+	.productList {
+		grid-template-columns: 13rem 13rem 13rem 13rem 13rem;
+		grid-column-gap: 4rem;
+		grid-row-gap: 0.1rem;
+	}
+}
+
+@media only screen and (min-width: 1500px) and (max-width: 1750px) {
+	.productList {
+		grid-template-columns: 16rem 16rem 16rem 16rem;
+		grid-column-gap: 2rem;
+		grid-row-gap: 0.1rem;
+	}
+}
+
+@media only screen and (min-width: 1300px) and (max-width: 1500px) {
+	.productList {
+		grid-template-columns: 20rem 20rem 20rem;
+		grid-column-gap: 0rem;
+		grid-row-gap: 0.1rem;
+	}
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1300px) {
+	.productList {
+		grid-template-columns: 24rem 24rem;
+		grid-column-gap: 0rem;
+		margin-left: 3rem;
+		grid-row-gap: 0.1rem;
+	}
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+	.productList {
+		grid-template-columns: 100%;
+		margin-left: 11rem;
+		grid-row-gap: 0.1rem;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.productList {
+		grid-template-columns: 100%;
+		grid-column-gap: 5%;
+		grid-row-gap: 0.1rem;
+		margin-left: 5.5rem;
+	}
+}
+
+.linkColor {
+	color: white;
+}
+
+.productBox:hover .addCartButtonProductPage {
+	opacity: 1;
+	visibility: visible;
+}
+
+.image {
+	max-width: 10rem;
+	max-height: 5.5rem;
+}
+
+.description {
+	max-height: 9.5rem;
+	margin-top: 0.3rem;
+	overflow-y: scroll;
+	word-break: break-all;
+}
+
+.description::-webkit-scrollbar {
+	display: none;
+}
+
+.productName {
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	margin-top: 3rem;
+}
+
+.imageContainer {
+	height: 4rem;
+}
