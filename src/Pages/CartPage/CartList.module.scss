@@ -58,7 +58,7 @@
 .img {
 	max-width: 7rem;
 	max-height: 7rem;
-	min-width: 6rem;
+	min-width: 4rem;
 	margin-right: 1rem;
 }
 
@@ -94,7 +94,7 @@
 	width: 40%;
 }
 
-.checkOutButton {
+.checkOutButtonActive {
 	padding: 0.4rem;
 	border-radius: 0.4rem;
 	color: white;
@@ -102,7 +102,15 @@
 	cursor: pointer;
 }
 
-.checkOutButton:hover {
+.checkOutButtonActive:hover {
 	color: black;
 	background: white;
+}
+
+.checkOutButtonIsntActive {
+	padding: 0.4rem;
+	border-radius: 0.4rem;
+	color: white;
+	background: black;
+   pointer-events: none;
 }

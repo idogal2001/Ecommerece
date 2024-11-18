@@ -8,7 +8,12 @@ const InputMax = (): JSX.Element => {
 
 	const saveInputMax = (maxRange: React.KeyboardEvent<HTMLInputElement>): void => {
 		if (maxRange.key === 'Enter') {
-			setMaxPriceRange(Number(maxRange.currentTarget.value));
+			if(maxRange.currentTarget.value === ""){
+				setMaxPriceRange(500000);
+			}
+			else{
+				setMaxPriceRange(Number(maxRange.currentTarget.value));
+			}
 		}
 	};
 

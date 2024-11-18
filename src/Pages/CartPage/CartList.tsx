@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { newProductListContext, amountContext } from '../../App';
@@ -14,7 +15,6 @@ const CartList = (): JSX.Element => {
 	const [newProductList, setNewProductList] = productListData;
 	const amountData = useContext(amountContext);
 	const [, setAmount] = amountData;
-
 	const [priceOfList, setPriceOfList] = useState<number>(0);
 	const [popUp, setPopUp] = useState<boolean>(false);
 	const [popUpList, setPopUpList] = useState<Product[]>([]);
@@ -68,7 +68,7 @@ const CartList = (): JSX.Element => {
 					))}
 				</div>
 				<div>Total Price: {priceOfList}₪</div>
-				<button className={styles.checkOutButton} onClick={checkOut}>
+				<button  className = {classNames({[styles.checkOutButtonActive]: priceOfList !== 0, [styles.checkOutButtonIsntActive]: priceOfList === 0})} onClick={checkOut}>
 					Check Out
 				</button>
 			</div>

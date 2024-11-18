@@ -7,7 +7,10 @@ const InputMin = (): JSX.Element => {
 	const setMinPrice = homePageData.setMinPrice;
 
 	const saveInputMin = (minRange: React.KeyboardEvent<HTMLInputElement>): void => {
-		if (minRange.key === 'Enter') {
+		if(minRange.currentTarget.value === ""){
+			setMinPrice(0);
+		}
+		else{
 			setMinPrice(Number(minRange.currentTarget.value));
 		}
 	};
