@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../PopUp/PopUp.module.scss';
-import type { Product } from '../../../Product';
+import type { Product } from '../../../Interfaces/Product';
 
 interface PopUpProps {
 	productNewList: Product[];
@@ -20,7 +20,7 @@ const PopUp = ({ productNewList, popUp, setPopUp }: PopUpProps): JSX.Element => 
 					{productNewList.map((product: Product) => (
 						<div className={styles.itemBox} key={product.id}>
 							<div className={styles.imgPadding}>
-								<img className={styles.img} alt={`product${product.id}`} src={product.image_url}/>
+								<img className={styles.img} alt={`product${product.id}`} src={product.imageUrl}/>
 							</div>
 							<div className={styles.nameAndDesPadding}>
 								<div className={styles.nameAndDes}>

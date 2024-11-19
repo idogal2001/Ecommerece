@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import { HomePageContext } from '../../../Pages/HomePage/HomePage';
+import { HomePageContext } from '../../../Context/Context';
 import styles from '../SearchBar/SearchBar.module.scss'
 
 const SearchBar = (): JSX.Element => {
-	const homePageData = useContext(HomePageContext);
-	const setSearch = homePageData.setSearch;
+	const setSearch = useContext(HomePageContext).setSearch;
 
 	const searchBar = (value: React.FormEvent<HTMLInputElement>): void => {
 		setSearch(value.currentTarget.value);

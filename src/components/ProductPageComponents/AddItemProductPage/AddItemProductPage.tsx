@@ -1,60 +1,44 @@
 import React, { useContext } from 'react';
-import { amountContext, newProductListContext } from '../../../App';
+import { amountContext, cartProductListContext } from '../../../Context/Context';
 import styles from '../AddItemProductPage/AddItemProductPage.module.scss';
-import type { Category } from '../../../Category';
-import type { Product } from '../../../Product';
+import type { Product } from '../../../Interfaces/Product';
 
 interface AddItemProductPageProps {
-	id: number;
-	image_url: string;
-	description: string;
-	name: string;
-	price: number;
+	product: Product;
 	itemAmount: number;
-	upload_date: string;
-	seller_name: string;
-	categories: Category[];
 	allowAdd: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const AddItemProductPage = ({ id, image_url, description, name, price, itemAmount, upload_date, seller_name, categories, allowAdd }: AddItemProductPageProps): JSX.Element => {
-	const amountData = useContext(amountContext);
-	const [amount, setAmount] = amountData;
-	const productListData = useContext(newProductListContext);
-	const [newProductList, setNewProductList] = productListData;
-
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	const addProduct = (id: number, image_url: string, description: string, name: string, price: number, itemAmount: number, upload_date: string, seller_name: string, categories: Category[]): void => {
-		const itemInfo: Product = {
-			id,
-			image_url,
-			description,
-			name,
-			price,
-			seller_name,
-			upload_date,
-			categories,
-			amount: itemAmount,
-		};
-
+const AddItemProductPage = ({
+	product,
+	itemAmount,
+	allowAdd,
+}: AddItemProductPageProps): JSX.Element => {
+	const [amount, setAmount] = useContext(amountContext);
+	const [cartProductList, setCartProductList] = useContext(cartProductListContext);
+	
+	const addProduct = (
+		itemAmount: number,
+		product: Product,
+	): void => {
+		const newProduct: Product = {...product, amount: itemAmount,};
 		if (allowAdd) {
-			const existingProduct = newProductList.find(product => product.id === id);
+			const existingProduct: Product | undefined = cartProductList.find(product => product.id === newProduct.id);
 			if (!existingProduct) {
-				setNewProductList([...newProductList, itemInfo]);
+				setCartProductList([...cartProductList, newProduct]);
 				setAmount(amount + itemAmount);
 			} else {
 				if (existingProduct.amount + itemAmount > 20) {
 					alert('pls less then 20');
 				} else {
-					const updatedProductList: Product[] = newProductList.map((product: Product) => {
-						if (product.id === id) {
-							return { ...product, amount: existingProduct.amount + itemAmount }
+					const updatedProductList: Product[] = cartProductList.map((productCart: Product) => {
+						if (productCart.id === product.id) {
+							return { ...productCart, amount: existingProduct.amount + itemAmount };
 						} else {
-							return product;
+							return productCart;
 						}
 					});
-					setNewProductList(updatedProductList);
+					setCartProductList(updatedProductList);
 					setAmount(amount + itemAmount);
 				}
 			}
@@ -63,7 +47,10 @@ const AddItemProductPage = ({ id, image_url, description, name, price, itemAmoun
 
 	return (
 		<div className={styles.addCartButtonPadding}>
-			<button className={styles.addCartButton} onClick={() => addProduct(id, image_url, description, name, price, itemAmount, upload_date, seller_name, categories)}>
+			<button
+				className={styles.addCartButton}
+				onClick={() => addProduct(itemAmount, product)}
+			>
 				Add To Cart
 			</button>
 		</div>

@@ -1,38 +1,27 @@
 import React, { useContext } from 'react';
-import { amountContext, newProductListContext } from '../../../App';
+import { amountContext, cartProductListContext } from '../../../Context/Context';
 import styles from '../../GlobalProductBox/Global.module.scss';
-import type { Category } from '../../../Category';
-import type { Product } from '../../../Product';
+import type { Product } from '../../../Interfaces/Product';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const AddProduct = ({ id, image_url, description, name, price, upload_date, seller_name, categories}: Product): JSX.Element => {
-	const amountData = useContext(amountContext);
-	const [amount, setAmount] = amountData;
-	const productListData = useContext(newProductListContext);
-	const [productNewList, setProductNewList] = productListData;
+interface AddProductProps {
+	product: Product;
+}
+
+const AddProduct = ({ product }: AddProductProps): JSX.Element => {
+	const [amount, setAmount] = useContext(amountContext);
+	const [cartProductList, setCartProductList] = useContext(cartProductListContext);
 
 	const addProduct = (
-		product: Product[],
-		setProduct: React.Dispatch<React.SetStateAction<Product[]>>,
-		id: number,
-		image: string,
-		description: string,
-		name: string,
-		price: number,
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		upload_date: string,
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		seller_name: string,
-		categories: Category[],
+		product: Product
 	): void => {
-		const currentProduct = productNewList.find((product: Product) => product.id === id);
+		const currentProduct = cartProductList.find((productCart: Product) => productCart.id === product.id);
 		if (!currentProduct) {
-			const productData: Product = { id, image_url, description, name, upload_date, seller_name, price, categories, amount: 1 };
-			setProductNewList([...productNewList, productData]);
+			const productData: Product = { ...product, amount: 1 };
+			setCartProductList([...cartProductList, productData]);
 			setAmount(amount + 1);
 		} else if (currentProduct.amount < 20) {
-			const productData: Product[] = productNewList.map(item => (item.id === id ? { ...item, amount: item.amount + 1 } : item));
-			setProductNewList(productData);
+			const productData: Product[] = cartProductList.map(item => (item.id === product.id ? { ...item, amount: item.amount + 1 } : item));
+			setCartProductList(productData);
 			setAmount(amount + 1);
 		} else {
 			alert('please choose less then 20 products');
@@ -43,7 +32,9 @@ const AddProduct = ({ id, image_url, description, name, price, upload_date, sell
 		<div className={styles.addCartButtonFlex}>
 			<button
 				className={styles.addCartButtonProductPage}
-				onClick={() => addProduct(productNewList, setProductNewList, id, image_url, description, name, price, upload_date, seller_name, categories)}
+				onClick={() =>
+					addProduct(product)
+				}
 			>
 				add to cart
 			</button>
