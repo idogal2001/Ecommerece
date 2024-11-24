@@ -1,8 +1,6 @@
-import { useQuery } from '@apollo/client';
-import React, { useEffect } from 'react';
-import { categories } from '../GQLQueries.tsx/CategoriesQuery';
-import { products } from '../GQLQueries.tsx/ProductsQuery';
+import { useEffect } from 'react';
 import styles from '../Query/Query.module.scss';
+import useFetchData from '../UseFetchData/UseFetchData';
 import type { Category } from '../../Interfaces/Category';
 import type { Product } from '../../Interfaces/Product';
 
@@ -21,15 +19,15 @@ interface OldProduct {
 interface QueryProps {
 	setProductCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 	setProductListDB: React.Dispatch<React.SetStateAction<Product[]>>;
+	setHighestPrice: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Query = ({ setProductCategories, setProductListDB }: QueryProps): JSX.Element => {
-	const { data: productsData, loading: productsLoading, error: productsError } = useQuery(products);
-	const { data: categoriesData, loading: categoriesLoading, error: categoriesError } = useQuery(categories);
+const Query = ({ setProductCategories, setProductListDB, setHighestPrice}: QueryProps): JSX.Element => {
+	const { productsData, productsLoading, productsError, categoriesData, categoriesLoading, categoriesError } = useFetchData();
 
 	useEffect(() => {
 		if (productsData) {
-			const formattedProducts = productsData.products.map((product: OldProduct) => ({
+			const formattedProducts: Product[] = productsData.products.map((product: OldProduct) => ({
 				id: product.id,
 				name: product.description,
 				imageUrl: product.image_url,
@@ -37,12 +35,15 @@ const Query = ({ setProductCategories, setProductListDB }: QueryProps): JSX.Elem
 				description: product.name,
 				price: product.price,
 				sellerName: product.seller_name,
+				amount: 0,
 				categories: product.categories.map((category: Category) => ({
 					id: category.id,
 					name: category.name,
 				})),
 			}));
 			setProductListDB(formattedProducts);
+			const highestPriceData: number = formattedProducts.reduce((max, product) => (product.price > max ? product.price : max), 0);
+			setHighestPrice(highestPriceData);
 		}
 
 		if (categoriesData) {
@@ -52,10 +53,10 @@ const Query = ({ setProductCategories, setProductListDB }: QueryProps): JSX.Elem
 			}));
 			setProductCategories(formattedCategories);
 		}
-	}, [productsData, categoriesData, productsLoading, categoriesLoading, setProductCategories, setProductListDB]);
+	}, [productsData, categoriesData, setProductCategories, setProductListDB, setHighestPrice]);
 
 	if (productsLoading ?? categoriesLoading) return <div className={styles.loading}>Loading...</div>;
-	if (productsError ?? categoriesError) return <div className={styles.error}>error...</div>;
+	if (productsError ?? categoriesError) return <div className={styles.error}>Error...</div>;
 
 	return <></>;
 };

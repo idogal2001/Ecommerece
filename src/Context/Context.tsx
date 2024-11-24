@@ -1,11 +1,11 @@
-import { createContext } from "react";
-import type { Category } from "../Interfaces/Category";
-import type { Product } from "../Interfaces/Product";
-import type { Dispatch, SetStateAction } from "react";
+import { createContext } from 'react';
+import type { Category } from '../Interfaces/Category';
+import type { Product } from '../Interfaces/Product';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface HomePageContextProps {
-	minPrice: number;
-	setMinPrice: Dispatch<SetStateAction<number>>;
+	minPriceRange: number;
+	setMinPriceRange: Dispatch<SetStateAction<number>>;
 	search: string;
 	setSearch: Dispatch<SetStateAction<string>>;
 	layout: boolean;
@@ -19,8 +19,8 @@ interface HomePageContextProps {
 }
 
 export const HomePageContext = createContext<HomePageContextProps>({
-	minPrice: 0,
-	setMinPrice: () => {},
+	minPriceRange: 0,
+	setMinPriceRange: () => {},
 	search: '',
 	setSearch: () => {},
 	layout: false,
@@ -33,7 +33,27 @@ export const HomePageContext = createContext<HomePageContextProps>({
 	setMaxPriceRange: () => {},
 });
 
-export const cartProductListContext = createContext<[Product[], Dispatch<SetStateAction<Product[]>>]>([[], () => {}]);
-export const amountContext = createContext<[number, Dispatch<SetStateAction<number>>]>([0, () => {}]);
-export const productListDBContext = createContext<[Product[], Dispatch<SetStateAction<Product[]>>]>([[], () => {}]);
-export const productDBCategoriesContext = createContext<[Category[], Dispatch<SetStateAction<Category[]>>]>([[], () => {}]);
+export const cartProductListContext = createContext<{
+	cartProductList: Product[];
+	setCartProductList: Dispatch<SetStateAction<Product[]>>;
+}>({ cartProductList: [], setCartProductList: () => {} });
+
+export const amountContext = createContext<{
+	amount: number;
+	setAmount: Dispatch<SetStateAction<number>>;
+}>({ amount: 0, setAmount: () => {} });
+
+export const productListDBContext = createContext<{
+	productListDB: Product[];
+	setProductListDB: Dispatch<SetStateAction<Product[]>>;
+}>({ productListDB: [], setProductListDB: () => {} });
+
+export const productDBCategoriesContext = createContext<{
+	productCategories: Category[];
+	setProductCategories: Dispatch<SetStateAction<Category[]>>;
+}>({ productCategories: [], setProductCategories: () => {} });
+
+export const highestPriceContext = createContext<{
+	highestPrice: number;
+	setHighestPrice: Dispatch<SetStateAction<number>>;
+}>({ highestPrice: 0, setHighestPrice: () => {} });

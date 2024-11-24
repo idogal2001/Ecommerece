@@ -90,14 +90,14 @@
 	max-height: 5.5rem;
 }
 
-.description {
+.descriptionBox {
 	max-height: 9.5rem;
 	margin-top: 0.3rem;
 	overflow-y: scroll;
 	word-break: break-all;
 }
 
-.description::-webkit-scrollbar {
+.descriptionBox::-webkit-scrollbar {
 	display: none;
 }
 
@@ -110,4 +110,16 @@
 
 .imageContainer {
 	height: 4rem;
+}
+
+.imgBox {
+	margin-top: 0.3rem;
+}
+
+.priceBox {
+	margin-top: 0.3rem;
+}
+
+.dateBox {
+	margin-top: 0.3rem;
 }

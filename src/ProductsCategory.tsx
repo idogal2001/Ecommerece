@@ -1,6 +1,1 @@
-export const ProductsCategory = [
-    "Samsung",
-    "Apple",
-    "UNIQLO",
-    "VMS",
-];
+export const ProductsCategory = ['Samsung', 'Apple', 'UNIQLO', 'VMS', 'asdfsfsfda'];

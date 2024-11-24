@@ -3,13 +3,9 @@ import { amountContext, cartProductListContext } from '../../../Context/Context'
 import styles from '../../GlobalProductBox/Global.module.scss';
 import type { Product } from '../../../Interfaces/Product';
 
-interface AddProductProps {
-	product: Product;
-}
-
-const AddProduct = ({ product }: AddProductProps): JSX.Element => {
-	const [amount, setAmount] = useContext(amountContext);
-	const [cartProductList, setCartProductList] = useContext(cartProductListContext);
+const AddProduct = (product: Product): JSX.Element => {
+	const {amount, setAmount} = useContext(amountContext);
+	const {cartProductList, setCartProductList} = useContext(cartProductListContext);
 
 	const addProduct = (
 		product: Product
@@ -20,7 +16,7 @@ const AddProduct = ({ product }: AddProductProps): JSX.Element => {
 			setCartProductList([...cartProductList, productData]);
 			setAmount(amount + 1);
 		} else if (currentProduct.amount < 20) {
-			const productData: Product[] = cartProductList.map(item => (item.id === product.id ? { ...item, amount: item.amount + 1 } : item));
+			const productData: Product[] = cartProductList.map(item => (item.id === product.id ? { ...item, amount: Number(item.amount) + 1 } : item));
 			setCartProductList(productData);
 			setAmount(amount + 1);
 		} else {

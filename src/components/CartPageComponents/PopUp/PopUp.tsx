@@ -1,4 +1,4 @@
-import React from 'react';
+import CartProductList from '../CartContainer/CartProductList';
 import styles from '../PopUp/PopUp.module.scss';
 import type { Product } from '../../../Interfaces/Product';
 
@@ -8,40 +8,19 @@ interface PopUpProps {
 	setPopUp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PopUp = ({ productNewList, popUp, setPopUp }: PopUpProps): JSX.Element => {
-	const checkOut = (): void => {
-		setPopUp(!popUp);
-	};
-
-	return (
-		<div className={styles.popUpBackground}>
-			<div className={styles.popUp}>
-				<div className={styles.checkOutBox}>
-					{productNewList.map((product: Product) => (
-						<div className={styles.itemBox} key={product.id}>
-							<div className={styles.imgPadding}>
-								<img className={styles.img} alt={`product${product.id}`} src={product.imageUrl}/>
-							</div>
-							<div className={styles.nameAndDesPadding}>
-								<div className={styles.nameAndDes}>
-									{product.description} <div className={styles.itemDes}>{product.name}... </div>
-								</div>
-								<div className={styles.price}>
-									{product.price * product.amount}
-									{'₪'}
-								</div>
-							</div>
-						</div>
-					))}
-				</div>
-			</div>
-			<div className={styles.checkOutButtonPadding}>
-				<button className={styles.checkOutButton} onClick={checkOut}>
-					Close!
-				</button>
+const PopUp = ({ productNewList, popUp, setPopUp }: PopUpProps): JSX.Element => (
+	<div className={styles.popUpBackground}>
+		<div className={styles.popUp}>
+			<div className={styles.checkOutBox}>
+			<CartProductList productList={productNewList} popUpCondition={true}/>
 			</div>
 		</div>
-	);
-};
+		<div className={styles.checkOutButtonPadding}>
+			<button className={styles.checkOutButton} onClick={() => setPopUp(!popUp)}>
+				Close!
+			</button>
+		</div>
+	</div>
+);
 
 export default PopUp;

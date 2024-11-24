@@ -2,13 +2,13 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
+	height: 4rem;
 }
 
 .buttonActive {
 	width: 0.8rem;
 	height: 0.8rem;
 	border-radius: 1rem;
-	margin-right: auto;
 	cursor: pointer;
 	background-color: #007fff;
 }
@@ -19,17 +19,14 @@
 	border-radius: 1rem;
 	margin-right: auto;
 	cursor: pointer;
+	font-size: 1rem;
 	background-color: white;
 }
 
 .filterNames {
 	margin-left: auto;
-	width: 80%;
-}
-
-.filtersButton {
-	padding: 0.4rem;
-	border-radius: 0.3rem;
-	font-size: 1rem;
+	width: 10rem;
+	color: white;
+	font-size: 1.3rem;
 	cursor: pointer;
 }

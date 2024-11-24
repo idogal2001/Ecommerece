@@ -1,19 +1,15 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { HomePageContext } from '../../../Context/Context';
+import { HomePageContext, highestPriceContext } from '../../../Context/Context';
 import styles from '../../GlobalProductBox/Global.module.scss';
 import AddProduct from '../AddProduct/AddProduct';
-import type { Category } from '../../../Interfaces/Category';
 import type { Product } from '../../../Interfaces/Product';
 
 const ProductList = (): JSX.Element => {
-	const search: string = useContext(HomePageContext).search;
-	const categoryFilter: Category[] = useContext(HomePageContext).categories;
-	const maxPriceRange: number = useContext(HomePageContext).maxPriceRange;
-	const minPriceRange: number = useContext(HomePageContext).minPrice;
-	let productList: Product[] = useContext(HomePageContext).productListFiltered;
+	let { minPriceRange, maxPriceRange, categories, productListFiltered, search } = useContext(HomePageContext);
+	const { highestPrice } = useContext(highestPriceContext);
 
-	productList = productList.filter(({ description: itemName }) => {
+	productListFiltered = productListFiltered.filter(({ name: itemName }) => {
 		if (search === '') {
 			return true;
 		} else {
@@ -34,38 +30,37 @@ const ProductList = (): JSX.Element => {
 	});
 
 	if (minPriceRange !== 0) {
-		productList = productList.filter(({ price: itemPrice }) => itemPrice >= minPriceRange);
-	}
-	if (maxPriceRange !== 1300) {
-		productList = productList.filter(({ price: itemPrice }) => itemPrice <= maxPriceRange);
+		productListFiltered = productListFiltered.filter(({ price: itemPrice }) => itemPrice >= minPriceRange);
 	}
 
-	if (categoryFilter.length > 0) {
-		productList = productList.filter(product =>
-			product.categories.some(productCategory => categoryFilter.some(category => category.id === productCategory.id)),
+	if (maxPriceRange !== highestPrice) {
+		productListFiltered = productListFiltered.filter(({ price: itemPrice }) => itemPrice <= maxPriceRange);
+	}
+
+	if (categories.length > 0) {
+		productListFiltered = productListFiltered.filter(product =>
+			product.categories.some(productCategory => categories.some(category => category.id === productCategory.id)),
 		);
 	}
 
-	if (productList.length === 0) {
-		return <div className={styles.notInStock}>Not in stock</div>;
-	}
-
-	return (
+	return productListFiltered.length === 0 ? (
+		<div className={styles.notInStock}>Not in stock</div>
+	) : (
 		<div className={styles.productList}>
-			{productList.map((product: Product) => (
+			{productListFiltered.map((product: Product) => (
 				<div className={styles.productBox} key={product.id}>
 					<Link to={`/ProductPage/${product.id}`}>
 						<div className={styles.imageContainer}>
-							<div>
+							<div className={styles.imgBox}>
 								<img className={styles.image} alt={`product${product.id}`} src={product.imageUrl} />
 							</div>
 						</div>
 					</Link>
 					<div className={styles.productName}>Name: {product.name}</div>
-					<div>Date: {new Date(product.date).toLocaleDateString('en-GB')}</div>
-					<div>Price: {product.price}₪</div>
-					<div className={styles.description}>description: {product.description}</div>
-					<AddProduct product={product} />
+					<div className={styles.dateBox}>Date: {new Date(product.date).toLocaleDateString('en-GB')}</div>
+					<div className={styles.priceBox}>Price: {product.price}₪</div>
+					<div className={styles.descriptionBox}>description: {product.description}</div>
+					<AddProduct {...product} />
 				</div>
 			))}
 		</div>

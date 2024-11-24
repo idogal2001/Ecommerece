@@ -4,10 +4,8 @@ import styles from '../CategoryButton/CategoryButton.module.scss';
 import type { Category } from '../../../../Interfaces/Category';
 
 const CategoryButton = (): JSX.Element => {
-	const categories = useContext(HomePageContext).categories;;
-	const setCategories = useContext(HomePageContext).setCategories;
-	const categoriesDB = useContext(productDBCategoriesContext);
-	const [productCategories] = categoriesDB;
+	const { categories, setCategories } = useContext(HomePageContext);
+	const {productCategories} = useContext(productDBCategoriesContext);
 
 	const addCategory = (category: Category): void => {
 		let categoriesList = [...categories];

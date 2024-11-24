@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { amountContext, cartProductListContext } from '../../../Context/Context';
 import styles from '../AddItemProductPage/AddItemProductPage.module.scss';
 import type { Product } from '../../../Interfaces/Product';
@@ -9,21 +9,14 @@ interface AddItemProductPageProps {
 	allowAdd: boolean;
 }
 
-const AddItemProductPage = ({
-	product,
-	itemAmount,
-	allowAdd,
-}: AddItemProductPageProps): JSX.Element => {
-	const [amount, setAmount] = useContext(amountContext);
-	const [cartProductList, setCartProductList] = useContext(cartProductListContext);
-	
-	const addProduct = (
-		itemAmount: number,
-		product: Product,
-	): void => {
-		const newProduct: Product = {...product, amount: itemAmount,};
+const AddItemProductPage = ({ product, itemAmount, allowAdd }: AddItemProductPageProps): JSX.Element => {
+	const {amount, setAmount} = useContext(amountContext);
+	const {cartProductList, setCartProductList} = useContext(cartProductListContext);
+
+	const addProduct = (itemAmount: number, product: Product): void => {
+		const newProduct: Product = { ...product, amount: itemAmount };
 		if (allowAdd) {
-			const existingProduct: Product | undefined = cartProductList.find(product => product.id === newProduct.id);
+			const existingProduct = cartProductList.find(product => product.id === newProduct.id);
 			if (!existingProduct) {
 				setCartProductList([...cartProductList, newProduct]);
 				setAmount(amount + itemAmount);
@@ -31,13 +24,7 @@ const AddItemProductPage = ({
 				if (existingProduct.amount + itemAmount > 20) {
 					alert('pls less then 20');
 				} else {
-					const updatedProductList: Product[] = cartProductList.map((productCart: Product) => {
-						if (productCart.id === product.id) {
-							return { ...productCart, amount: existingProduct.amount + itemAmount };
-						} else {
-							return productCart;
-						}
-					});
+					const updatedProductList: Product[] = cartProductList.map((productCart: Product) => productCart.id === product.id ? { ...productCart, amount: existingProduct.amount + itemAmount } : productCart);
 					setCartProductList(updatedProductList);
 					setAmount(amount + itemAmount);
 				}
@@ -47,10 +34,7 @@ const AddItemProductPage = ({
 
 	return (
 		<div className={styles.addCartButtonPadding}>
-			<button
-				className={styles.addCartButton}
-				onClick={() => addProduct(itemAmount, product)}
-			>
+			<button className={styles.addCartButton} onClick={() => addProduct(itemAmount, product)}>
 				Add To Cart
 			</button>
 		</div>

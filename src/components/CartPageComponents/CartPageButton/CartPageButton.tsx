@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './CartPageButton.module.scss';
 import type { Product } from '../../../Interfaces/Product';
 
