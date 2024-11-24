@@ -1,0 +1,50 @@
+.webContainerCart {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	line-height: 4rem;
+	font-size: 1.5rem;
+}
+
+.cartListContainer {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	flex-direction: column;
+	overflow-y: auto;
+	background: black;
+	border-radius: 2rem;
+	line-height: 4rem;
+	height: 26rem;
+	width: 60rem;
+	padding: 2rem;
+	margin-top: 1rem;
+}
+
+.cartListContainer::-webkit-scrollbar {
+	display: none;
+}
+
+.checkOutButtonActive {
+	padding: 0.4rem;
+	border-radius: 0.4rem;
+	color: white;
+	background: black;
+	cursor: pointer;
+}
+
+.checkOutButtonActive:hover {
+	color: black;
+	background: white;
+}
+
+.checkOutButtonIsntActive {
+	padding: 0.4rem;
+	border-radius: 0.4rem;
+	color: white;
+	background: black;
+   pointer-events: none;
+}

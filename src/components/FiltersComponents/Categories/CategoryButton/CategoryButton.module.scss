@@ -1,0 +1,25 @@
+.buttonCategoriesPadding {
+	width: 100%;
+}
+
+.buttonPadding {
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.filterNames {
+	margin-left: auto;
+	width: 80%;
+}
+
+.filtersButton {
+	padding: 0.4rem;
+	border-radius: 0.3rem;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.categoryButton {
+	cursor: pointer;
+}

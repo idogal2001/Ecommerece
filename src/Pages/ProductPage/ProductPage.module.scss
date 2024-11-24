@@ -1,0 +1,56 @@
+.productPage {
+	height: 100%;
+	width: 100%;
+}
+
+.webContainerProduct {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.productInfo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: auto;
+	width: 32rem;
+	background: black;
+	border-radius: 1rem;
+	line-height: 2.3rem;
+}
+
+.img {
+	max-width: 8rem;
+	max-height: 8rem;
+}
+
+.descriptionPadding {
+	width: 80%;
+	height: 30%;
+	max-height: 6rem;
+	overflow-y: auto;
+}
+
+.descriptionPadding::-webkit-scrollbar {
+	display: none;
+}
+
+.productAmount {
+	margin: 0.4rem;
+}
+
+.itemInput {
+	background: black;
+	color: white;
+	padding: 0.6rem;
+	margin: 0.3rem;
+}
+
+.priceOfItem {
+	padding-left: 0.3rem;
+	width: 6rem;
+	margin-bottom: auto;
+}
